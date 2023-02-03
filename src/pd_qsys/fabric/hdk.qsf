@@ -1,0 +1,34 @@
+set_global_assignment -name TOP_LEVEL_ENTITY hdk
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 21.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "09:26:21  JUNE 01, 2021"
+set_global_assignment -name LAST_QUARTUS_VERSION "22.1.0 Pro Edition"
+set_global_assignment -name FAMILY "Stratix 10"
+set_global_assignment -name DEVICE 1SX280HN2F43E2VG
+set_global_assignment -name IP_FILE ip/apf/apf_clock_bridge.ip
+set_global_assignment -name IP_FILE ip/apf/apf_reset_bridge.ip
+set_global_assignment -name IP_FILE ip/apf/apf_bpf_mst.ip
+set_global_assignment -name IP_FILE ip/apf/apf_bpf_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_st2mm_mst.ip
+set_global_assignment -name IP_FILE ip/apf/apf_st2mm_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_pgsk_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_achk_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_b_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_c_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_d_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_e_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_f_slv.ip
+set_global_assignment -name QSYS_FILE apf.qsys
+set_global_assignment -name IP_FILE ip/bpf/bpf_clock_bridge.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_reset_bridge.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_apf_mst.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_apf_slv.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_fme_mst.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_fme_slv.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_pmci_slv.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_pcie_slv.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_hssi_slv.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_emif_slv.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_rsv_5_slv.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_rsv_6_slv.ip
+set_global_assignment -name IP_FILE ip/bpf/bpf_rsv_7_slv.ip
+set_global_assignment -name QSYS_FILE bpf.qsys

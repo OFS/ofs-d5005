@@ -1,0 +1,18 @@
+# Copyright 2021 Intel Corporation
+# SPDX-License-Identifier: MIT
+
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 21.1.0 Build 169 03/24/2021 SC Pro Edition
+# Date created = 15:33:07  May 06, 2021
+#
+# -------------------------------------------------------------------------- #
+
+QUARTUS_VERSION = "21.1"
+DATE = "15:33:07  May 06, 2021"
+
+# Revisions
+
+PROJECT_REVISION = "d5005"
+PROJECT_REVISION = "iofs_pr_afu"

@@ -1,0 +1,22 @@
+set_global_assignment -name TOP_LEVEL_ENTITY apf
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 22.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "03:59:19  SEPTEMBER 20, 2022"
+set_global_assignment -name LAST_QUARTUS_VERSION "22.1.0 Pro Edition"
+set_global_assignment -name FAMILY "Stratix 10"
+set_global_assignment -name DEVICE 1SX280HN2F43E2VG
+set_global_assignment -name IP_FILE ip/apf/apf_clock_bridge.ip
+set_global_assignment -name IP_FILE ip/apf/apf_reset_bridge.ip
+set_global_assignment -name IP_FILE ip/apf/apf_bpf_mst.ip
+set_global_assignment -name IP_FILE ip/apf/apf_bpf_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_st2mm_mst.ip
+set_global_assignment -name IP_FILE ip/apf/apf_soc_2_host_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_host_2_soc_mst.ip
+set_global_assignment -name IP_FILE ip/apf/apf_st2mm_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_pgsk_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_achk_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_b_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_c_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_d_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_e_slv.ip
+set_global_assignment -name IP_FILE ip/apf/apf_rsv_f_slv.ip
+set_global_assignment -name QSYS_FILE apf.qsys

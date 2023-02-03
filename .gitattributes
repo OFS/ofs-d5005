@@ -1,0 +1,5 @@
+/license/quartus-0.0-0.01iofs-linux.run filter=lfs diff=lfs merge=lfs -text
+/sim/rp_bfm/mentor/pcie_stratixv_hssi_atoms.v filter=lfs diff=lfs merge=lfs -text
+/sim/rp_bfm/mentor/pcie_stratixv_pcie_hip_atoms.v filter=lfs diff=lfs merge=lfs -text
+/sim/rp_bfm/synopsys/pcie_stratixv_hssi_atoms.v filter=lfs diff=lfs merge=lfs -text
+/sim/rp_bfm/synopsys/pcie_stratixv_pcie_hip_atoms.v filter=lfs diff=lfs merge=lfs -text
