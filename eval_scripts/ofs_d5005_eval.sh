@@ -40,18 +40,16 @@
 ##│   ├── examples-afu
 ##│   ├── linux-dfl
 ##│   ├── ofs-d5005
-##│   ├── ofs-hld-shim
 ##│   ├── opae-sdk
 ##│   ├── opae-sim
 ##│   ├── iofs_d5005_eval.sh
 
 # Repository Contents
-## examples-afu	          (Basic Building Blocks (BBB) for Intel FPGAs is a suite of application building blocks and shims for transforming the CCI-P interface)
-## linux-dfl	            (Contains mirror of linux-dfl and specific Intel OFS drivers that are being upstreamed to the Linux kernel)
-## ofs-d5005	            (Contains FIM or shell RTL, automated compilation scripts, unit tests framework)
-## ofs-hld-shim	          (Contains the hardware and software components you need to develop your own OneAPI or OpenCL board support package for the Intel® Stratix 10® and Intel® Agilex® FPGAs)
-## opae-sdk	              (Contains the files for building and installing Open Programmable Acceleration Engine Software Development Kit from source)
-## opae-sim	              (Contains the files for an AFU developer to build the Accelerator Funcitonal Unit Simulation Environment (ASE) for workload development)
+## examples-afu	 (Basic Building Blocks (BBB) for Intel FPGAs is a suite of application building blocks and shims for transforming the CCI-P interface)
+## linux-dfl	 (Contains mirror of linux-dfl and specific Intel OFS drivers that are being upstreamed to the Linux kernel)
+## ofs-d5005	 (Contains FIM or shell RTL, automated compilation scripts, unit tests framework)
+## opae-sdk	       (Contains the files for building and installing Open Programmable Acceleration Engine Software Development Kit from source)
+## opae-sim	       (Contains the files for an AFU developer to build the Accelerator Funcitonal Unit Simulation Environment (ASE) for workload development)
 
 # Generate Log file
 TIMESTAMP=`date "+%Y_%m_%d-%H%M%S"`
@@ -74,7 +72,7 @@ export SNPSLMD_LICENSE_FILE=
 # General Environment Variables
 export IOFS_BUILD_ROOT=$PWD
 
-export OFS_ROOTDIR=$IOFS_BUILD_ROOT/fim-d5005
+export OFS_ROOTDIR=$IOFS_BUILD_ROOT/ofs-d5005
 export WORKDIR=$OFS_ROOTDIR
 
 #################################################################################
@@ -120,6 +118,8 @@ export DESIGNWARE_HOME=$TOOLS_LOCATION/synopsys/vip_common/vip_Q-2020.03A
 export PATH=$DESIGNWARE_HOME/bin:$PATH
 export VCS_HOME=$TOOLS_LOCATION/synopsys/vcsmx/S-2021.09-SP1/linux64/rhel
 export PATH=$VCS_HOME/bin:$PATH
+export VERDIR=$OFS_ROOTDIR/verification
+export VIPDIR=$VERDIR
 
 ## QuestaSIM Verification Tools
 export MTI_HOME=$TOOLS_LOCATION/mentor/questasim/2021.4/linux64
@@ -135,7 +135,6 @@ export QUESTA_HOME=$MTI_HOME
 #* 1x10GbE
 #* 4 channels of DDR4
 #* Partial Reconfiguration support
-#* OpenCL support
 
 # ADP Platform (Example:= d5005)
 export ADP_PLATFORM=d5005
@@ -287,67 +286,6 @@ export ADP_CARD1_FUNCTION_NUMBER=0
 export ADP_CARD0_ID=$ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.$ADP_CARD0_FUNCTION_NUMBER
 export ADP_CARD1_ID=$ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.$ADP_CARD1_FUNCTION_NUMBER
 
-# OpenCL Slot Identification
-if [ $ADP_PLATFORM == "d5005" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-      
-        echo ""
-        export ADP_CARD0_ACL0=acl0
-        echo ""    
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-        echo ""
-        export ADP_CARD0_ACL0=acl0
-        echo ""    
-  
-        echo ""
-        export ADP_CARD1_ACL1=acl1
-        echo ""
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-
-elif [ $ADP_PLATFORM == "dXXXX" ]
-
-then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-      
-        echo ""
-        export ADP_CARD0_ACL0=acl0
-        echo ""    
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-        echo ""
-        export ADP_CARD0_ACL0=acl0
-        echo ""    
-  
-        echo ""
-        export ADP_CARD1_ACL1=acl1
-        echo ""
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-    
-else 
-
-  echo "None of the conditions met"
-
-fi
-
 #################################################################################
 #################### FIM and PR/AFU Set-up  #####################################
 #################################################################################
@@ -412,16 +350,6 @@ export AFU_BBB_TEST_NAME=hello_world
 export AFU_BBB_INTERFACE_NAME=axi
 
 #################################################################################
-#################### OPENCL Set-up  #############################################
-#################################################################################
-
-# OpenCL BSP's (ofs_d5005, ofs_d5005_usm)
-export OPENCL_BOARD_NAME=ofs_d5005
-
-# Kernel Name (Example:= boardtest, mem_bandwidth_usm)
-export OPENCL_KERNEL_TEST_NAME=boardtest
-
-#################################################################################
 #################### Simulater Set-up  ##########################################
 #################################################################################
 
@@ -443,85 +371,71 @@ export UNIT_TEST_NAME=dfh_walker
 #################### Multi-Test Set-up  #########################################
 #################################################################################
 
-# A user can run a sequence of tests and execute them sequentially. In the example below when the user selects option 47 from the main menu the script will execute 17 tests ie (main menu options 2, 9, 10, 11, 12, 13, 14, 15, 27, 29, 30, 32, 34, 35, 39, 45 and 46. All other tests with an "X" indicates do not run that test
+# A user can run a sequence of tests and execute them sequentially. In the example below when the user selects option 36 from the main menu the script will execute 13 tests ie (main menu options 2, 9, 10, 11, 12, 13, 14, 15, 27, 29, 30, 32 and 46. All other tests with an "X" indicates do not run that test
 intectiveprum=0
 declare -A MULTI_TEST
 
 # Enter Number of sequential tests to run
-MULTI_TEST[47,tests]=16
+MULTI_TEST[36,tests]=13
 
 # Enter options number from main menu
 
 # "=======================================================================================" 
 # "========================= ADP TOOLS MENU ==============================================" 
 # "======================================================================================="
-MULTI_TEST[47,X]=1
-MULTI_TEST[47,0]=2
+MULTI_TEST[36,X]=1
+MULTI_TEST[36,0]=2
 # "=======================================================================================" 
 # "========================= ADP HARDWARE MENU ===========================================" 
 # "=======================================================================================" 
-MULTI_TEST[47,X]=3
-MULTI_TEST[47,X]=4
-MULTI_TEST[47,X]=5
-MULTI_TEST[47,X]=6
-MULTI_TEST[47,X]=7
-MULTI_TEST[47,X]=8
+MULTI_TEST[36,X]=3
+MULTI_TEST[36,X]=4
+MULTI_TEST[36,X]=5
+MULTI_TEST[36,X]=6
+MULTI_TEST[36,X]=7
+MULTI_TEST[36,X]=8
 # "=======================================================================================" 
 # "========================= ADP FIM/PR BUILD MENU =======================================" 
 # "=======================================================================================" 
-MULTI_TEST[47,1]=9
-MULTI_TEST[47,2]=10
-MULTI_TEST[47,3]=11
-MULTI_TEST[47,4]=12
-MULTI_TEST[47,5]=13
-MULTI_TEST[47,6]=14
-MULTI_TEST[47,7]=15
+MULTI_TEST[36,1]=9
+MULTI_TEST[36,2]=10
+MULTI_TEST[36,3]=11
+MULTI_TEST[36,4]=12
+MULTI_TEST[36,5]=13
+MULTI_TEST[36,6]=14
+MULTI_TEST[36,7]=15
 # "=======================================================================================" 
 # "========================= ADP HARDWARE PROGRAMMING/DIAGNOSTIC MENU ====================" 
 # "=======================================================================================" 
-MULTI_TEST[47,X]=16
-MULTI_TEST[47,X]=17
-MULTI_TEST[47,X]=18
-MULTI_TEST[47,X]=19
-MULTI_TEST[47,X]=20
-MULTI_TEST[47,X]=21
-MULTI_TEST[47,X]=22
-MULTI_TEST[47,X]=23
-MULTI_TEST[47,X]=24
-MULTI_TEST[47,X]=25
-MULTI_TEST[47,X]=26
+MULTI_TEST[36,X]=16
+MULTI_TEST[36,X]=17
+MULTI_TEST[36,X]=18
+MULTI_TEST[36,X]=19
+MULTI_TEST[36,X]=20
+MULTI_TEST[36,X]=21
+MULTI_TEST[36,X]=22
+MULTI_TEST[36,X]=23
+MULTI_TEST[36,X]=24
+MULTI_TEST[36,X]=25
+MULTI_TEST[36,X]=26
 # "=======================================================================================" 
 # "========================== ADP HARDWARE AFU TESTING MENU ==============================" 
 # "=======================================================================================" 
-MULTI_TEST[47,8]=27
-MULTI_TEST[47,X]=28
-MULTI_TEST[47,9]=29
-MULTI_TEST[47,10]=30
-MULTI_TEST[47,X]=31
+MULTI_TEST[36,8]=27
+MULTI_TEST[36,X]=28
+MULTI_TEST[36,9]=29
+MULTI_TEST[36,10]=30
+MULTI_TEST[36,X]=31
 # "=======================================================================================" 
 # "========================== ADP HARDWARE AFU BBB TESTING MENU ==========================" 
 # "======================================================================================="
-MULTI_TEST[47,11]=32
-MULTI_TEST[47,X]=33
-# "=======================================================================================" 
-# "========================== ADP OPENCL PROJECT MENU ====================================" 
-# "======================================================================================="
-MULTI_TEST[47,12]=34
-MULTI_TEST[47,13]=35
-MULTI_TEST[47,X]=36
-MULTI_TEST[47,X]=37
-MULTI_TEST[47,X]=38
-MULTI_TEST[47,14]=39
-MULTI_TEST[47,X]=40
-MULTI_TEST[47,X]=41
-MULTI_TEST[47,X]=42
-MULTI_TEST[47,X]=43
-MULTI_TEST[47,X]=44
+MULTI_TEST[36,11]=32
+MULTI_TEST[36,X]=33
 # "=======================================================================================" 
 # "========================== ADP UNIT TEST PROJECT MENU =================================" 
 # "======================================================================================="
-MULTI_TEST[47,15]=45
-MULTI_TEST[47,16]=46
+MULTI_TEST[36,12]=34
+MULTI_TEST[36,13]=35
 
 test_number=0
 i=0
@@ -632,29 +546,14 @@ echo "==========================================================================
 echo "32  - Build and Compile $AFU_BBB_TEST_NAME example"
 echo "33  - Execute $AFU_BBB_TEST_NAME example"
 echo "=======================================================================================" 
-echo "=======================================================================================" 
-echo "========================== ADP OPENCL PROJECT MENU ====================================" 
-echo "======================================================================================="
-echo "34  - Check OpenCL BSP software versions for $ADP_PLATFORM Project"
-echo "35  - Build and clone shim libraries required by OpenCL host"
-echo "36  - Install OpenCL Host Driver"
-echo "37  - Uninstall OpenCL Host Driver"
-echo "38  - Diagnose OpenCL Hardware"
-echo "39  - Build OpenCL BSP $OPENCL_BOARD_NAME Default Kernel (boardtest)"
-echo "40  - Check PF/VF Mapping Table, vfio-pci driver binding and accelerator port status"
-echo "41  - Unbind vfio-pci driver"
-echo "42  - Create Virtual Function (VF) and bind driver to vfio-pci $ADP_PLATFORM Hardware"
-echo "43  - Program OpenCL BSP $OPENCL_BOARD_NAME Default Kernel (boardtest)"
-echo "44  - Run OpenCL Sample Application ($OPENCL_KERNEL_TEST_NAME)"
-echo "=======================================================================================" 
 echo "========================== ADP UNIT TEST PROJECT MENU =================================" 
 echo "======================================================================================="
-echo "45  - Generate Simulation files for Unit Test"
-echo "46  - Simulate Unit Test $UNIT_TEST_NAME and log waveform"
+echo "34  - Generate Simulation files for Unit Test"
+echo "35  - Simulate Unit Test $UNIT_TEST_NAME and log waveform"
 echo "=======================================================================================" 
 echo "========================== ADP BUILD ALL PROJECT MENU =================================" 
 echo "======================================================================================="
-echo "47  - Build and Simulate Complete $ADP_PLATFORM Project"
+echo "36  - Build and Simulate Complete $ADP_PLATFORM Project"
 echo ""
 echo "0   - Exit program"
 echo ""
@@ -3527,651 +3426,6 @@ echo "" ; press_enter ;;
         34) 
 
 echo "###########################################################################################"
-echo "#################### Check Set-up of ADP BSP Project ######################################"
-echo "###########################################################################################"
-echo ""
-# OpenCL Tools
-export INTELFPGAOCLSDKROOT=$QUARTUS_ROOTDIR/../hld
-source $INTELFPGAOCLSDKROOT/init_opencl.sh
-export AOCL_BOARD_PACKAGE_ROOT=$IOFS_BUILD_ROOT/ofs-hld-shim/d5005
-export LIBOPAE_C_ROOT=/usr
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OFS_ROOTDIR/../ofs-hld-shim/d5005/linux64/lib
-echo ""
-echo "###########################################################################################"
-echo "#################### Check AOCL_BOARD_PACKAGE_ROOT ########################################"
-echo "###########################################################################################"
-echo ""
-echo "AOCL_BOARD_PACKAGE_ROOT is set to $AOCL_BOARD_PACKAGE_ROOT" 
-echo ""
-echo "###########################################################################################"
-echo "#################### Check INTELFPGAOCLSDKROOT ############################################"
-echo "###########################################################################################"     
-echo ""
-echo "LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
-echo "" 
-echo "###########################################################################################"
-echo "#################### Check AOC Software and Compiler Versions #############################"
-echo "###########################################################################################"
-echo "" 
-aocl version 
-echo ""  
-aoc -version
-echo ""                       
-echo "###########################################################################################"
-echo "#################### Check Board XML File #################################################"
-echo "###########################################################################################"
-echo "" 
-aocl board-xml-test 
-echo ""                 
-echo "###########################################################################################"
-echo "#################### Check Boards available within home BSP ###############################"
-echo "###########################################################################################"
-echo ""
-aoc -list-boards 
-echo ""
-echo "BSP is set to $BSP_NAME" 
-echo ""
-echo "###########################################################################################"
-echo "#################### Check Kernel used in BSP #############################################"
-echo "###########################################################################################"
-echo ""
-echo "KERNEL is set to $OPENCL_KERNEL_TEST_NAME"
-echo ""
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo ""
-date
-echo "" ; press_enter ;;
-
-        35) 
-
-echo "###########################################################################################"
-echo "#################### Build and clone shim libraries required by OpenCL host ###############"
-echo "###########################################################################################"
-echo ""
-cd $IOFS_BUILD_ROOT/ofs-hld-shim/d5005/scripts
-# Partial Reconfiguration (PR) Build Tree
-export OPAE_PLATFORM_ROOT=$OFS_ROOTDIR/$FIM_WORKDIR_PR
-./build-bsp.sh
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo ""
-date
-echo "" ; press_enter ;;
-
-        36)
-    
-echo "###########################################################################################"
-echo "#################### Install OpenCL Host Driver ###########################################"
-echo "###########################################################################################"
-echo ""     
-aocl install $IOFS_BUILD_ROOT/ofs-hld-shim/d5005
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo "" 
-date
-echo "" ; press_enter ;;
-
-        37)
-     
-echo "###########################################################################################"
-echo "#################### Uninstall OpenCL Host Driver #########################################"
-echo "###########################################################################################"
-echo ""     
-aocl uninstall $IOFS_BUILD_ROOT/ofs-hld-shim/d5005
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo "" 
-date
-echo "" ; press_enter ;;
-
-        38)
-
-echo ""     
-echo "###########################################################################################"
-echo "#################### Diagnose OpenCL Hardware #############################################"
-echo "###########################################################################################"
-echo "" 
-#export ACL_PCIE_DEBUG=1
-#export ACL_HAL_DEBUG=1
-
-aocl diagnose
-
-if [ $ADP_PLATFORM == "d5005" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-      
-         aocl diagnose $ADP_CARD0_ACL0     
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-      
-         aocl diagnose $ADP_CARD0_ACL0        
-  
-         aocl diagnose $ADP_CARD0_ACL1     
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-    
-elif [ $ADP_PLATFORM == "dXXXX" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-      
-         aocl diagnose $ADP_CARD0_ACL0    
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-      
-         aocl diagnose $ADP_CARD0_ACL0        
-  
-         aocl diagnose $ADP_CARD0_ACL1  
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-  
-else 
-
-  echo "None of the conditions met"
-
-fi
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo ""
-date
-echo "" ; press_enter ;;
-
-        39) 
-
-echo "###########################################################################################"
-echo "#################### Build OpenCL BSP Default Kernel (boardtest) ##########################"
-echo "###########################################################################################"
-echo ""
-cd $IOFS_BUILD_ROOT/ofs-hld-shim/d5005/scripts
-# Partial Reconfiguration (PR) Build Tree
-export OPAE_PLATFORM_ROOT=$OFS_ROOTDIR/$FIM_PR_WORKDIR
-./build-default-aocx.sh -b $OPENCL_BOARD_NAME
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo ""
-date
-echo "" ; press_enter ;;
-
-        40) 
-
-echo "###########################################################################################"
-echo "#################### Check PF/VF, vfio-pci driver binding and accelerator port status #####"
-echo "###########################################################################################"
-echo ""
-echo "Check PF/VF Mapping Table"
-echo " │MODULE          │VF"
-echo ""
-echo " │HE-LB           │1"
-echo " │HE-MEM          │2"
-echo " │HE-HSSI         │3"
-
-echo ""
-echo "Checking Current binding of Drivers"
-sudo opae.io ls
-echo ""
-
-echo "Check that the accelerators are present using fpgainfo"
-if [ $ADP_PLATFORM == "d5005" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-      
-        echo ""  
-        echo "Accelerater Port 0 = ST2MM"
-        sudo fpgainfo port $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.0
-        echo "" 
-        echo "Accelerater Port 1 = HE-LB"
-        sudo fpgainfo port $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1
-        echo ""
-        echo "Accelerater Port 2 = HE-MEM"
-        sudo fpgainfo port $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2
-        echo ""    
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-      
-        echo ""  
-        echo "Accelerater Port 0 = ST2MM"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.0
-        echo "" 
-        echo "Accelerater Port 1 = HE-LB"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.1
-        echo ""
-        echo "Accelerater Port 2 = HE-MEM"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.2
-        echo ""      
-  
-        echo ""  
-        echo "Accelerater Port 0 = ST2MM"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.0
-        echo "" 
-        echo "Accelerater Port 1 = HE-LB"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.1
-        echo ""
-        echo "Accelerater Port 2 = HE-MEM"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.2
-        echo ""    
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-    
-elif [ $ADP_PLATFORM == "dXXXX" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-      
-        echo ""  
-        echo "Accelerater Port 0 = ST2MM"
-        sudo fpgainfo port $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.0
-        echo "" 
-        echo "Accelerater Port 1 = HE-LB"
-        sudo fpgainfo port $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1
-        echo ""
-        echo "Accelerater Port 2 = HE-MEM"
-        sudo fpgainfo port $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2
-        echo ""        
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-      
-        echo ""  
-        echo "Accelerater Port 0 = ST2MM"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.0
-        echo "" 
-        echo "Accelerater Port 1 = HE-LB"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.1
-        echo ""
-        echo "Accelerater Port 2 = HE-MEM"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.2
-        echo ""        
-  
-        echo ""  
-        echo "Accelerater Port 0 = ST2MM"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.0
-        echo "" 
-        echo "Accelerater Port 1 = HE-LB"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.1
-        echo ""
-        echo "Accelerater Port 2 = HE-MEM"
-        sudo fpgainfo port $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.2
-        echo ""    
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-  
-else 
-
-  echo "None of the conditions met"
-
-fi
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo ""
-date
-echo "" ; press_enter ;;
-
-        41) 
-
-echo "###########################################################################################"
-echo "#################### Unbind vfio-pci driver ###############################################"
-echo "###########################################################################################"
-echo ""
-echo "Unbinding Current Drivers"
-
-if [ $ADP_PLATFORM == "d5005" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-        
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-      
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2
-  
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.1
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.2
-
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-    
-elif [ $ADP_PLATFORM == "dXXXX" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-      
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-      
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1
-          sudo opae.io release -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2 
-  
-          sudo opae.io release -d $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.1
-          sudo opae.io release -d $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.2
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-  
-else 
-
-  echo "None of the conditions met"
-
-fi
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo ""
-date
-echo "" ; press_enter ;;
-
-        42) 
-
-echo "###########################################################################################"
-echo "#################### Create 2 VF'2 and bind vfio-pci driver ###############################"
-echo "###########################################################################################"
-echo ""
-
-if [ $ADP_PLATFORM == "d5005" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-        
-        echo ""
-        echo "Create 2 Virtual Function's (VF)"
-        sudo pci_device $ADP_CARD0_ID vf 2
-        echo ""
-        echo "Verify 2 VF's is created"
-        sudo lspci -s $ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER
-        echo ""
-        echo "Bind VF's 1 and 2 to the vfio-pci driver"
-        sudo opae.io init -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1 $USER
-        sudo opae.io init -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2 $USER
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-      
-        echo ""
-        echo "Create 2 Virtual Function's (VF)"
-        sudo pci_device $ADP_CARD0_ID vf 2
-        echo ""
-        echo "Verify 2 VF's is created"
-        sudo lspci -s $ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER
-        echo ""
-        echo "Bind VF's 1 and 2 to the vfio-pci driver"
-        sudo opae.io init -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1 $USER
-        sudo opae.io init -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2 $USER
-          
-        echo ""
-        echo "Create 2 Virtual Function's (VF)"
-        sudo pci_device $ADP_CARD1_ID vf 2
-        echo ""
-        echo "Verify 2 VF's is created"
-        sudo lspci -s $ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER
-        echo ""
-        echo "Bind VF's 1 and 2 to the vfio-pci driver"
-        sudo opae.io init -d $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.1 $USER
-        sudo opae.io init -d $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.2 $USER
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-    
-elif [ $ADP_PLATFORM == "dXXXX" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-      
-        echo ""
-        echo "Create 2 Virtual Function's (VF)"
-        sudo pci_device $ADP_CARD0_ID vf 2
-        echo ""
-        echo "Verify 2 VF's is created"
-        sudo lspci -s $ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER
-        echo ""
-        echo "Bind VF's 1 and 2 to the vfio-pci driver"
-        sudo opae.io init -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1 $USER
-        sudo opae.io init -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2 $USER
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-      
-        echo ""
-        echo "Create 2 Virtual Function's (VF)"
-        sudo pci_device $ADP_CARD0_ID vf 2
-        echo ""
-        echo "Verify 2 VF's is created"
-        sudo lspci -s $ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER
-        echo ""
-        echo "Bind VF's 1 and 2 to the vfio-pci driver"
-        sudo opae.io init -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.1 $USER
-        sudo opae.io init -d $ADP_CARD0_SOCKET_NUMBER:$ADP_CARD0_BUS_NUMBER:$ADP_CARD0_DEVICE_NUMBER.2 $USER
-          
-        echo ""
-        echo "Create 2 Virtual Function's (VF)"
-        sudo pci_device $ADP_CARD1_ID vf 2
-        echo ""
-        echo "Verify 2 VF's is created"
-        sudo lspci -s $ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER
-        echo ""
-        echo "Bind VF's 1 and 2 to the vfio-pci driver"
-        sudo opae.io init -d $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.1 $USER
-        sudo opae.io init -d $ADP_CARD1_SOCKET_NUMBER:$ADP_CARD1_BUS_NUMBER:$ADP_CARD1_DEVICE_NUMBER.2 $USER
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-  
-else 
-
-  echo "None of the conditions met"
-
-fi
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo ""
-date
-echo "" ; press_enter ;;
-
-        43) 
-
-echo "###########################################################################################"
-echo "#################### Program OpenCL BSP Default Kernel (boardtest) ########################"
-echo "###########################################################################################"
-echo ""
-
-if [ $ADP_PLATFORM == "d5005" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-
-        # Program OpenCL BSP Default Kernel (boardtest)
-        aocl initialize acl0 $OPENCL_BOARD_NAME  
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-
-        # Program OpenCL BSP Default Kernel (boardtest)
-        aocl initialize acl0 $OPENCL_BOARD_NAME  
-
-        # Program OpenCL BSP Default Kernel (boardtest)
-        aocl initialize acl1 $OPENCL_BOARD_NAME 
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-    
-elif [ $ADP_PLATFORM == "dXXXX" ]
-
-  then
-    if [ $ADP_CARD_CONFIG == "SINGLE" ]
-      then
-      
-        # Program OpenCL BSP Default Kernel (boardtest)
-        aocl initialize acl0 $OPENCL_BOARD_NAME  
-
-    elif [ $ADP_CARD_CONFIG == "MULTI" ]
-
-      then
-
-        # Program OpenCL BSP Default Kernel (boardtest)
-        aocl initialize acl0 $OPENCL_BOARD_NAME  
-
-        # Program OpenCL BSP Default Kernel (boardtest)
-        aocl initialize acl1 $OPENCL_BOARD_NAME 
-  
-    else 
-
-        echo "None of the conditions met"
-
-    fi
-  
-else 
-
-  echo "None of the conditions met"
-
-fi
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo ""
-date
-echo "" ; press_enter ;;
-
-        44) 
-
-echo "###########################################################################################"
-echo "#################### Run OpenCL Sample Applications  ######################################"
-echo "###########################################################################################"
-echo ""
-
-if [ $ADP_PLATFORM == "d5005" ]
-
-  then
-    cd $IOFS_BUILD_ROOT/ofs-hld-shim/d5005/bringup/source/boardtest
-    make
-    cp $IOFS_BUILD_ROOT/ofs-hld-shim/d5005/bringup/aocxs/$OPENCL_BOARD_NAME.aocx ./boardtest.aocx
-    ./boardtest_host
-    cd $IOFS_BUILD_ROOT
-    
-elif [ $ADP_PLATFORM == "dXXXX" ]
-
-  then
-    cd $IOFS_BUILD_ROOT/ofs-hld-shim/d5005/bringup/source/boardtest
-    make
-    cp $IOFS_BUILD_ROOT/ofs-hld-shim/d5005/bringup/aocxs/$OPENCL_BOARD_NAME.aocx ./boardtest.aocx
-    ./boardtest_host
-    cd $IOFS_BUILD_ROOT
-  
-else
- 
-  echo "None of the conditions met"
-
-fi
-
-echo "Generating Log File with date and timestamp"
-echo "Log file written to $LOG_FILE"
-
-cd $IOFS_BUILD_ROOT
-
-echo ""
-date
-echo "" ; press_enter ;;
-
-        45) 
-
-echo "###########################################################################################"
 echo "#################### Generate Simulation files for Unit Test ##############################"
 echo "###########################################################################################"
 echo ""
@@ -4207,7 +3461,7 @@ echo ""
 date
 echo "" ; press_enter ;;
 
-        46) 
+        35) 
 
 echo "###########################################################################################"
 echo "#################### Simulate Unit Test ###################################################"
@@ -4245,7 +3499,7 @@ echo ""
 date
 echo "" ; press_enter ;;
 
-        47) 
+        36) 
 
 echo "###########################################################################################"
 echo "#################### Build and Simulate Complete Project ##################################"
@@ -4257,7 +3511,7 @@ if [ $ADP_PLATFORM == "d5005" ]
   then
   
     echo "Building and Simulating Complete $ADP_PLATFORM Project"
-    test_number=47
+    test_number=36
     intectiveprum=2
 
 elif [ $ADP_PLATFORM == "dXXXX" ]
@@ -4265,7 +3519,7 @@ elif [ $ADP_PLATFORM == "dXXXX" ]
   then
 
     echo "Building and Simulating Complete $ADP_PLATFORM Project"
-    test_number=47
+    test_number=36
     intectiveprum=2
   
 else
@@ -4284,6 +3538,6 @@ date
 echo "" ; press_enter ;;
 
         0 ) return ;;
-        * ) echo "Please enter 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47 or 0"; press_enter
+        * ) echo "Please enter 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36 or 0"; press_enter
     esac
 done
