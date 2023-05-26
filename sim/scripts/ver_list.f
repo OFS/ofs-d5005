@@ -1,0 +1,11 @@
++incdir+$WORKDIR/sim/bfm
+$WORKDIR/sim/bfm/test_utils.sv
+$WORKDIR/sim/bfm/test_utils.sv
+$WORKDIR/sim/bfm/test_pcie_utils.sv
+$WORKDIR/sim/bfm/ready_gen.sv
+$WORKDIR/sim/bfm/packet_sender.sv
+$WORKDIR/sim/bfm/packet_receiver.sv
+$WORKDIR/sim/bfm/shmem.sv
+$WORKDIR/sim/bfm/pcie_flr.sv
+$WORKDIR/sim/bfm/tester.sv
+$WORKDIR/sim/bfm/top_tb.sv

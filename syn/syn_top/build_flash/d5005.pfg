@@ -1,0 +1,78 @@
+<pfg version="1">
+    <settings custom_db_dir="./" mode="AVSTX8"/>
+    <output_files>
+        <output_file name="d5005" directory="../../syn_top/output_files/" type="POF">
+            <file_options/>
+            <secondary_file type="MAP" name="d5005">
+                <file_options/>
+            </secondary_file>
+            <flash_device_id>Flash_Device_1</flash_device_id>
+        </output_file>
+    </output_files>
+    <bitstreams>
+        <bitstream id="Bitstream_1">
+            <path>./factory_image.sof</path>
+        </bitstream>
+        <bitstream id="Bitstream_2">
+            <path>../../syn_top/output_files/d5005.sof</path>
+        </bitstream>
+    </bitstreams>
+    <raw_files>
+        <raw_file type="HEX" id="Raw_File_1">./blank_bmc_key_programmed.reversed.hex</raw_file>
+        <raw_file type="HEX" id="Raw_File_2">./blank_bmc_root_hash.reversed.hex</raw_file>
+        <raw_file type="HEX" id="Raw_File_3">./blank_sr_key_programmed.reversed.hex</raw_file>
+        <raw_file type="HEX" id="Raw_File_4">./blank_sr_root_hash.reversed.hex</raw_file>
+        <raw_file type="HEX" id="Raw_File_5">./pac_d5005_rot_xip_factory.bin.reversed.hex</raw_file>
+        <raw_file type="HEX" id="Raw_File_6">./pac_d5005_rot_xip_factory_header.bin.reversed.hex</raw_file>
+        <raw_file type="HEX" id="Raw_File_7">./max10_device_table.bin.hex</raw_file>
+        <raw_file type="HEX" id="Raw_File_8">./pac_d5005_option_bits.hex</raw_file>
+    </raw_files>
+    <flash_devices>
+        <flash_device type="CFI_2Gb" id="Flash_Device_1">
+            <partition reserved="1" fixed_s_addr="0" s_addr="0x00000000" e_addr="auto" fixed_e_addr="0" id="OPTIONS" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x0BA00FF0" e_addr="auto" fixed_e_addr="0" id="xip_factory_header" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x0B800000" e_addr="auto" fixed_e_addr="0" id="xip_factory_bin" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x07FFD004" e_addr="auto" fixed_e_addr="0" id="sr_root_hash" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x07FFD000" e_addr="auto" fixed_e_addr="0" id="sr_key_programmed" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x07FFC004" e_addr="auto" fixed_e_addr="0" id="bmc_root_hash" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x07FFC000" e_addr="auto" fixed_e_addr="0" id="bmc_key_programmed" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x04000000" e_addr="auto" fixed_e_addr="0" id="Page_1" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x00020000" e_addr="auto" fixed_e_addr="0" id="Page_0" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x00010000" e_addr="auto" fixed_e_addr="0" id="pac_d5005_option_bits" size="0"/>
+            <partition reserved="0" fixed_s_addr="0" s_addr="0x03820000" e_addr="auto" fixed_e_addr="0" id="max10_device_table" size="0"/>
+        </flash_device>
+    </flash_devices>
+    <assignments>
+        <assignment partition_id="xip_factory_header">
+            <raw_file_id>Raw_File_6</raw_file_id>
+        </assignment>
+        <assignment partition_id="xip_factory_bin">
+            <raw_file_id>Raw_File_5</raw_file_id>
+        </assignment>
+        <assignment partition_id="sr_root_hash">
+            <raw_file_id>Raw_File_4</raw_file_id>
+        </assignment>
+        <assignment partition_id="sr_key_programmed">
+            <raw_file_id>Raw_File_3</raw_file_id>
+        </assignment>
+        <assignment partition_id="bmc_root_hash">
+            <raw_file_id>Raw_File_2</raw_file_id>
+        </assignment>
+        <assignment partition_id="bmc_key_programmed">
+            <raw_file_id>Raw_File_1</raw_file_id>
+        </assignment>
+        <assignment page="1" partition_id="Page_1">
+            <bitstream_id>Bitstream_2</bitstream_id>
+        </assignment>
+        <assignment page="0" partition_id="Page_0">
+            <bitstream_id>Bitstream_1</bitstream_id>
+        </assignment>
+        <assignment partition_id="pac_d5005_option_bits">
+            <raw_file_id>Raw_File_8</raw_file_id>
+        </assignment>
+        <assignment partition_id="max10_device_table">
+            <raw_file_id>Raw_File_7</raw_file_id>
+        </assignment>
+    </assignments>
+</pfg>
+

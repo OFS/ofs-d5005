@@ -1,0 +1,27 @@
+Folder Structure:
+
+├── README.md                 // This is current file
+├── scripts
+│   └── build_var_setup.sh     // This script is to setup env variables for OFS-D5005 build
+├── setup                      // Build setup files for OFS-D5005
+│   ├── README.md              // Refer the README in this section for details
+│   ├── ...                    // various setup files
+├── syn_top                    // D5005 Quartus build area with necessary files for build                                                           
+│   ├── d5005.ipregen.rpt          // IP regeneration report states the output of IP upgrade 
+│   ├── d5005.qpf                  // Quartus Project File (qpf) mentions about Quartus version and project revision
+│   ├── d5005.qsf                  // Quartus Settings File (qsf) lists current project settings and entity level assignments 
+│   ├── d5005.stp                  // Signal Tap file included in the d5005.qsf. This file can be modified as required
+│   ├── fme_id.mif                 // the fme id hex value is stored in a mif file format 
+│   ├── iofs_pr_afu.qsf            // PR AFU qsf file
+│   ├── iofs_pr_afu_sources.tcl    // AFU source file list
+│   ├── ofs_partial_reconfig       // D5005 PR scripts and setp up files 
+│   │   ├── ...
+│   ├── pr_debug.stp               // Signal Tap file for PR debug          
+
+
+NOTE - To set the number of DDR channelson d5005, the following files need to be updated:
+     - $(OFS_ROOTDIR)/src/fims/d5005/afu/pf_vf_mux_top/mux/top_cfg_pkg.sv
+     - parameter NUM_MEM_CH = 4;
+     - update NUM_MEM_CH with 2/4 based on number of DDR channels.
+
+   
