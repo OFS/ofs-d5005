@@ -1,0 +1,25 @@
+# Copyright 2021 Intel Corporation
+# SPDX-License-Identifier: MIT
+
+
+##
+## Load the subset of interfaces and modules required for AFUs inside the port
+## gasket. This is the minimal set of sources loaded when generating the
+## out-of-tree PR build environment.
+##
+
+# Include files
+set_global_assignment -name SEARCH_PATH $::env(BUILD_ROOT_REL)/src/includes/
+
+set_global_assignment -name SYSTEMVERILOG_FILE $::env(BUILD_ROOT_REL)/src/includes/ofs_fim_cfg_pkg.sv
+
+# Common interface files
+set_global_assignment -name SOURCE_TCL_SCRIPT_FILE $::env(BUILD_ROOT_REL)/ofs-common/src/fpga_family/stratix10/afu_if_design_files.tcl
+set_global_assignment -name SOURCE_TCL_SCRIPT_FILE $::env(BUILD_ROOT_REL)/ofs-common/src/common/ofs_common_if_design_files.tcl
+
+# Signal tap, available in the PR region
+set_global_assignment -name SDC_FILE $::env(BUILD_ROOT_REL)/syn/setup/signaltap_clock_crossing.sdc
+
+set_global_assignment -name SOURCE_TCL_SCRIPT_FILE $::env(BUILD_ROOT_REL)/syn/setup/eth_afu_if_design_files.tcl
+set_global_assignment -name SOURCE_TCL_SCRIPT_FILE $::env(BUILD_ROOT_REL)/syn/setup/emif_afu_if_design_files.tcl
+set_global_assignment -name SOURCE_TCL_SCRIPT_FILE $::env(BUILD_ROOT_REL)/syn/setup/pcie_afu_if_design_files.tcl
