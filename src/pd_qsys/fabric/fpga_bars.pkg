@@ -1,0 +1,17 @@
+    parameter     FME_BASE 	 = 0x000000; 	 parameter     FME_SIZE 	= 20	; 
+    parameter     FME_BASE 	 = 0x000000; 	 parameter     FME_SIZE 	= 16	; 
+    parameter     PMCI_BASE 	 = 0x010000; 	 parameter     PMCI_SIZE 	= 16	; 
+    parameter     PCIE_BASE 	 = 0x020000; 	 parameter     PCIE_SIZE 	= 16	; 
+    parameter     HSSI_BASE 	 = 0x030000; 	 parameter     HSSI_SIZE 	= 16	; 
+    parameter     EMIF_BASE 	 = 0x040000; 	 parameter     EMIF_SIZE 	= 16	; 
+    parameter     RSV_5_BASE 	 = 0x050000; 	 parameter     RSV_5_SIZE 	= 16	; 
+    parameter     RSV_6_BASE 	 = 0x060000; 	 parameter     RSV_6_SIZE 	= 16	; 
+    parameter     RSV_7_BASE 	 = 0x070000; 	 parameter     RSV_7_SIZE 	= 16	; 
+    parameter     ST2MM_BASE 	 = 0x080000; 	 parameter     ST2MM_SIZE 	= 16	; 
+    parameter     PGSK_BASE 	 = 0x090000; 	 parameter     PGSK_SIZE 	= 16	; 
+    parameter     ACHK_BASE 	 = 0x0a0000; 	 parameter     ACHK_SIZE 	= 16	; 
+    parameter     RSV_b_BASE 	 = 0x0b0000; 	 parameter     RSV_b_SIZE 	= 16	; 
+    parameter     RSV_c_BASE 	 = 0x0c0000; 	 parameter     RSV_c_SIZE 	= 16	; 
+    parameter     RSV_d_BASE 	 = 0x0d0000; 	 parameter     RSV_d_SIZE 	= 16	; 
+    parameter     RSV_e_BASE 	 = 0x0e0000; 	 parameter     RSV_e_SIZE 	= 16	; 
+    parameter     RSV_f_BASE 	 = 0x0f0000; 	 parameter     RSV_f_SIZE 	= 16	; 
