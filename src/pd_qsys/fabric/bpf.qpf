@@ -1,0 +1,17 @@
+# Copyright 2022 Intel Corporation
+# SPDX-License-Identifier: MIT
+
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 22.1.0 Build 174 03/30/2022 SC Pro Edition
+# Date created = 03:59:33  September 20, 2022
+#
+# -------------------------------------------------------------------------- #
+
+QUARTUS_VERSION = "22.1"
+DATE = "03:59:33  September 20, 2022"
+
+# Revisions
+
+PROJECT_REVISION = "bpf"

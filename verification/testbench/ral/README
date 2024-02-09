@@ -1,0 +1,13 @@
+To generate a particular RAL file link the corresponding xls with ln -s <path>
+where path is below:
+
+ src/he_hssi/HE_HSSI_CSR.xls .
+ src/common/ST2MM_CSR.xls .
+ src/he_lb/HE-Loopback_CSR.xls .
+ src/pr_gasket/PR_CSR.xls .
+ src/fims/d5005/spi/SPI_CSR.xls .
+ ipss/d5005/pcie/rtl/PCIE_CSR.xls .
+ src/fme/FME_CSR.xls .
+
+Run: mkral.pl <filename without .xls extention> <block name (spi/hssi/pcie etc) [block size (default is 8)]
+

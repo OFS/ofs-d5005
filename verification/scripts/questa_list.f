@@ -1,0 +1,55 @@
++define+QUESTA
++incdir+QUESTA_HOME/include
++incdir+$QUESTA_HOME/verilog_src/uvm-1.2/src
++incdir+$QUESTA_HOME/verilog_src/uvm-1.2/src/dpi
++incdir+$VIP_DIR/vip/axi_vip/include/verilog
++incdir+$VIP_DIR/vip/axi_vip/include/sverilog
++incdir+$VIP_DIR/vip/axi_vip/src/verilog/mti
++incdir+$VIP_DIR/vip/axi_vip/src/sverilog/mti
++incdir+$VIP_DIR/vip/pcie_vip/include/verilog
++incdir+$VIP_DIR/vip/pcie_vip/include/sverilog
++incdir+$VIP_DIR/vip/pcie_vip/src/verilog/mti
++incdir+$VIP_DIR/vip/pcie_vip/src/sverilog/mti
++incdir+$VIP_DIR/vip/axi_vip/lib/linux64
++incdir+$VIP_DIR/vip/pcie_vip/lib/linux64
++incdir+$VERDIR/tests/sequences/vip_seq
++incdir+$VERDIR/tests/sequences
++incdir+$VIP_DIR/vip/axi_vip/include/verilog
++incdir+$VIP_DIR/vip/axi_vip/include/sverilog
++incdir+$VIP_DIR/vip/axi_vip/src/verilog/mti
++incdir+$VIP_DIR/vip/axi_vip/src/sverilog/mti
++incdir+$VIP_DIR/vip/pcie_vip/include/verilog
++incdir+$VIP_DIR/vip/pcie_vip/include/sverilog
++incdir+$VIP_DIR/vip/pcie_vip/src/verilog/mti
++incdir+$VIP_DIR/vip/pcie_vip/src/sverilog/mti
++incdir+$VERDIR/tests/sequences/vip_seq
++incdir+$VERDIR/tests/sequences
++incdir+$VERDIR/tests
++incdir+$VERDIR/testbench
++incdir+$VERDIR/testbench/ral
++incdir+$VERDIR/testbench/tb_pcie
++incdir+$VERDIR/testbench/tb_pcie/src/verilog/mti
+-L $QUESTA_HOME/uvm-1.2
+-y $VIP_DIR/vip/pcie_vip/src/verilog/mti
+-y $VIP_DIR/vip/pcie_vip/src/sverilog/mti
+//$QUESTA_HOME/include/svdpi.h
+$QUESTA_HOME/verilog_src/uvm-1.2/src/uvm_pkg.sv
+$QUESTA_HOME/verilog_src/uvm-1.2/src/uvm_macros.svh
+//$QUESTA_HOME/verilog_src/uvm-1.2/src/dpi/uvm_dpi.cc 
+$VIP_DIR/vip/axi_vip/src/sverilog/mti/svt_if_util.svi
+$VIP_DIR/vip/axi_vip/include/sverilog/svt_gpio_if.svi
+$VIP_DIR/vip/axi_vip/include/sverilog/svt.uvm.pkg
+$VIP_DIR/vip/axi_vip/include/sverilog/svt_axi.uvm.pkg
+$VIP_DIR/vip/pcie_vip/include/sverilog/svt_pcie.uvm.pkg
+$VIP_DIR/vip/pcie_vip/src/verilog/mti/svc_util_parms.v
+$VIP_DIR/vip/pcie_vip/src/verilog/mti/pciesvc_parms.v
+$VIP_DIR/vip/pcie_vip/include/sverilog/svt_pcie_common_defines.svi
+$VIP_DIR/vip/pcie_vip/include/sverilog/svt_pcie_defines.svi
+//$VIP_DIR/vip/pcie_vip/src/sverilog/mti/svt_data.sv
+// $VIP_DIR/vip/pcie_vip/src/sverilog/mti/svt_configuration.sv
+$VIP_DIR/vip/pcie_vip/src/sverilog/mti/svt_pcie_device_configuration.sv
+$VIP_DIR/vip/pcie_vip/src/sverilog/mti/svt_pcie_device_agent.sv
+$VIP_DIR/vip/axi_vip/include/sverilog/svt_axi_if.svi
+$VIP_DIR/vip/axi_vip/include/sverilog/svt_axi_port_defines.svi
+$VIP_DIR/vip/axi_vip/src/sverilog/mti/svt_env.sv
+$VIP_DIR/vip/axi_vip/src/sverilog/mti/svt_axi_system_env.sv

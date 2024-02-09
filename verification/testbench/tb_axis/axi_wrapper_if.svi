@@ -1,0 +1,36 @@
+// Copyright 2021 Intel Corporation
+// SPDX-License-Identifier: MIT
+
+//-----------------------------------------------------------------------------
+// Description : AXI Wrapper Interface
+//-----------------------------------------------------------------------------
+
+
+interface axi_wrapper_if (input bit clk);
+
+  logic                                         tvalid;
+  logic                                         tready;
+  logic [127:0]                                 tdata;
+  logic [15:0]                                  tstrb;
+  logic [127:0]                                 tdest;
+  logic [15:0]                                  tkeep;
+  logic                                         tlast;
+  logic [7:0]                                   tid;
+  logic [7:0]                                   tuser;
+  logic                                         resetn;
+
+
+  modport axi_wrapper_mport(input clk,
+                            input resetn,
+                            input tready,
+                            output tvalid,
+                            output tdata,
+                            output tstrb,
+                            output tdest,
+                            output tkeep,
+                            output tlast,
+                            output tid,
+                            output tuser);
+
+endinterface
+

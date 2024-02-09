@@ -1,0 +1,61 @@
+
+Build Flash (for D5005 PAC card)
+
+The build flash files are located in the syn/<OFS_PROJECT>/<OFS_FIM>/<OFS_BOARD>/scripts/build_flash folder
+
+The build_flash.sh is the top level script
+
+The purpose of the flash build is to construct images to update the 2Gb CFI flash file 
+(either whole flash update, or with just the user images) from the base build sof file.
+
+Main Inputs:
+⦁	 FIM image sof file 
+
+Main Outputs:
+⦁	<proj_revision>.pof – image for the 2GB CFI flash for use with Quartus programmer and BMC bridge image.
+⦁	<proj_revision>_page1.bin – raw binary file for the OFS FIM user image (pre-PACSign)
+⦁	<proj_revision>_page1_unsigned.bin – OFS FIM user image to be used with fpgasupdate to perform in-system update of the user image in flash (post-PACSign)
+
+The build_flash.sh script performs the following tasks:
+1.	Sets up bit ordering of the binary components (root hey hashes, PFLII option bits, BMC FW) and 
+    converts them to hex for consumption by the Quartus program file generator (specified in the d5005.pfg file)
+    uses reverse.py tool to swap bit order of every byte boundary
+2.	Calls Quartus program file generator to generate the <proj_revision>.pof image from the include d5005.pfg file
+3.	Converts the <proj_revision>.pof to a binary representation <proj_revision>.bin
+    Note that the <proj_revision>.bin contains infomation of the whole flash image (bin equivalent of the pof)
+    conversion to binary from pof has 2 steps:
+        - quartus_cpf is used to convert the pof to ihex format
+        - objcopy is used to convert ihex to bin
+4.	Extracts the user image from the <proj_revision>.bin to <proj_revision>_page1.bin
+    Note that <proj_revision>_page1.bin has the page 1 image extracted. 
+    This file does not contain any other informaion other than the user image bitstream
+5.	PACSigns the user image ofs_fim_page1.bin to ofs_fim_page1_unsigned.bin
+    Adds Block 0/1 data to the fpga bitstream for use with fpgasupdate tool
+
+The following files are used in setting up the flash image by the Quartus program file generator specified by d5005.pfg. 
+The main purpose is to generate the complete, unsigned pof image of the 2Gb CFI flash:
+⦁	blank_bmc_key_programmed: blank key for BMC update
+⦁	blank_bmc_root_hash: blank BMC update root key hash
+⦁	blank_sr_key_programmed : blank key for FIM image update
+⦁	blank_sr_root_hash: blank root key hash for FIM image update
+⦁	darby_rot_xip_factory.bin: D5005 BMC FW image
+⦁	darby_rot_xip_factory_header.bin: D5005 BMC FW factory hader
+⦁	dc_option_bits: PFLII option bits with image size set to the space allotted in flash spec. 
+    (note that the d5005.pfg file will automatically generate option bits that matches the size of the image at address 0x0.  
+    This is not used as the option bits generated are only for that particular image size and may not match subsequent updates to the user image. 
+    The dc_option_bits above has the correct sizes to account for any images and are used by the PFLII core)
+    Please reference the Stratix 10 configuration user guide for more information on editing the option bits
+    (https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/stratix-10/ug-s10-config.pdf)
+    note that the option bits stored in dc_option_bits have the bit order reversed in every byte boundary
+⦁	factory_image.sof – this is the factory image (resides at page 0 of the fpga images on the flash)
+    if the factory_image.sof is not present in the directory, the current project sof file will be copied as factory_image.sof
+    (page 0 and page 1 will be the same image)
+    If the user image is stable enough to be a fall back image, 
+    copy the user image as 'factory_image.sof' and include it in the repository's build_flash directory 
+⦁	max10_device_table.bin.hex: contains the device tree for the BMC
+The d5005.pfg specifies the files and flash address location of the above images.
+The d5005.pfg is a Quartus PFG generated file and was modified for relative paths.
+
+Note that the <proj_revision>.pof can be used to unsign PAC D5005 cards via 10-pin JTAG port. The BMC RoT bypass image (max10_flash_programming.sof) is not included with OFS.
+
+

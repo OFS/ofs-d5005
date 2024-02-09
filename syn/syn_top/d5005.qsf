@@ -1,0 +1,126 @@
+# Copyright (C) 2020-2022 Intel Corporation
+# SPDX-License-Identifier: MIT
+
+set_global_assignment -name PRESERVE_FOR_DEBUG_ENABLE ON
+############################################################################################
+#                              FPGA Device                                                 #
+############################################################################################
+
+set_global_assignment -name FAMILY "Stratix 10"
+set_global_assignment -name DEVICE 1SX280HN2F43E2VG
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "1.2 V"
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name AUTO_RESERVE_CLKUSR_FOR_CALIBRATION OFF
+set_global_assignment -name RESERVE_DATA0_AFTER_CONFIGURATION "USE AS REGULAR IO"
+set_global_assignment -name PRESERVE_UNUSED_XCVR_CHANNEL ON
+
+############################################################################################
+#                               Synthesis Options                                          #
+############################################################################################
+
+set_global_assignment -name TOP_LEVEL_ENTITY iofs_top
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name OPTIMIZATION_MODE "SUPERIOR PERFORMANCE"
+set_global_assignment -name OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name OPTIMIZE_POWER_DURING_SYNTHESIS OFF
+set_global_assignment -name OPTIMIZE_POWER_DURING_FITTING OFF
+set_global_assignment -name ALLOW_REGISTER_RETIMING ON
+set_global_assignment -name ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM
+set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS ON
+set_global_assignment -name MUX_RESTRUCTURE ON
+set_global_assignment -name LAST_QUARTUS_VERSION "22.1.0 Pro Edition"
+set_global_assignment -name FLOW_DISABLE_ASSEMBLER OFF
+set_global_assignment -name FLOW_ENABLE_INTERACTIVE_TIMING_ANALYZER OFF
+
+############################################################################################
+#                       PWR MGMT
+############################################################################################
+set_global_assignment -name VID_OPERATION_MODE "PMBUS MASTER"
+set_global_assignment -name USE_PWRMGT_SCL SDM_IO0
+set_global_assignment -name USE_PWRMGT_SDA SDM_IO12
+set_global_assignment -name PWRMGT_BUS_SPEED_MODE "100 KHZ"
+set_global_assignment -name PWRMGT_SLAVE_DEVICE_TYPE OTHER
+set_global_assignment -name PWRMGT_SLAVE_DEVICE0_ADDRESS 60
+set_global_assignment -name PWRMGT_SLAVE_DEVICE1_ADDRESS 00
+set_global_assignment -name PWRMGT_SLAVE_DEVICE2_ADDRESS 00
+set_global_assignment -name PWRMGT_SLAVE_DEVICE3_ADDRESS 00
+set_global_assignment -name PWRMGT_SLAVE_DEVICE4_ADDRESS 00
+set_global_assignment -name PWRMGT_SLAVE_DEVICE5_ADDRESS 00
+set_global_assignment -name PWRMGT_SLAVE_DEVICE6_ADDRESS 00
+set_global_assignment -name PWRMGT_SLAVE_DEVICE7_ADDRESS 00
+set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT "DIRECT FORMAT"
+set_global_assignment -name PWRMGT_DIRECT_FORMAT_COEFFICIENT_M 1
+set_global_assignment -name PWRMGT_DIRECT_FORMAT_COEFFICIENT_R 3
+set_global_assignment -name PWRMGT_TRANSLATED_VOLTAGE_VALUE_UNIT VOLTS
+set_global_assignment -name PWRMGT_PAGE_COMMAND_ENABLE OFF
+
+############################################################################################
+#                       Configuration Interface
+############################################################################################
+
+set_global_assignment -name AUTO_RESTART_CONFIGURATION OFF
+set_global_assignment -name ENABLE_CONFIGURATION_PINS OFF
+set_global_assignment -name ENABLE_BOOT_SEL_PIN OFF
+set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "AVST X8"
+set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
+set_global_assignment -name STRATIXII_CONFIGURATION_DEVICE AUTO
+set_global_assignment -name GENERATE_PR_RBF_FILE ON
+set_global_assignment -name ENABLE_ED_CRC_CHECK ON
+set_global_assignment -name MINIMUM_SEU_INTERVAL 0
+set_global_assignment -name ACTIVE_SERIAL_CLOCK AS_FREQ_100MHZ
+set_global_assignment -name DEVICE_INITIALIZATION_CLOCK OSC_CLK_1_125MHZ
+set_global_assignment -name USE_CONF_DONE SDM_IO16
+set_global_assignment -name GENERATE_RBF_FILE ON
+
+#Required for Clk Tree Synthesis to pass on Quartus 21.1
+set_instance_assignment -name GLOBAL_SIGNAL ON -from pcie_wrapper|pcie_top|dut|pcie_s10_hip_ast_0|altera_pcie_s10_hip_ast_pipen1b_inst|altera_pcie_s10_hip_ast_pllnphy_inst|g_phy_g3x16.phy_g3x16|phy_g3x16|altera_xcvr_hip_channel_s10_ch0|altera_xcvr_pcie_hip_channel_s10_ch0|g_xcvr_native_insts[0].ct2_xcvr_native_inst|inst_ct2_xcvr_channel_multi|gen_rev.ct2_xcvr_channel_inst|out_pld_pcs_tx_clk_out1_dcm -to pcie_wrapper|pcie_top|dut|pcie_s10_hip_ast_0|pio_clkCtrl|altera_pio_clkctrl|clkdiv_inst -entity iofs_top
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to emif_top_inst|mem_bank[0].emif_ddr4_inst|emif_s10_0|arch|arch_inst|non_hps.core_clks_rsts_inst|reset_sync_pri_sdc_anchor -entity iofs_top
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to emif_top_inst|mem_bank[1].emif_ddr4_inst|emif_s10_0|arch|arch_inst|non_hps.core_clks_rsts_inst|reset_sync_pri_sdc_anchor -entity iofs_top
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to emif_top_inst|mem_bank[2].emif_ddr4_inst|emif_s10_0|arch|arch_inst|non_hps.core_clks_rsts_inst|reset_sync_pri_sdc_anchor -entity iofs_top
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to emif_top_inst|mem_bank[3].emif_ddr4_inst|emif_s10_0|arch|arch_inst|non_hps.core_clks_rsts_inst|reset_sync_pri_sdc_anchor -entity iofs_top
+
+############################################################################################
+#                       GLOBAL PINS                                                        #
+############################################################################################
+
+##### Electrical standard assigments
+set_instance_assignment -name IO_STANDARD "LVDS" -to SYS_RefClk -entity iofs_top
+set_instance_assignment -name IO_STANDARD "LVDS" -to SYS_RefClk(n) -entity iofs_top
+
+##### Location assignments
+set_location_assignment PIN_AD8 -to SYS_RefClk
+set_location_assignment PIN_AD9 -to SYS_RefClk(n)
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to SYS_RefClk -entity iofs_top
+set_global_assignment -name SEARCH_PATH ../../src
+set_global_assignment -name SEARCH_PATH ../../src/includes
+set_global_assignment -name IP_SEARCH_PATHS "$::env(BUILD_ROOT_REL)/src/pd_qsys/**/*;"
+                                                       
+
+##### Verilog parameters
+#set_global_assignment -name VERILOG_MACRO INCLUDE_SPI_BRIDGE
+set_global_assignment -name VERILOG_MACRO INCLUDE_HSSI
+set_global_assignment -name VERILOG_MACRO INCLUDE_HE_HSSI
+#set_global_assignment -name VERILOG_MACRO DEBUG_MUX
+#set_global_assignment -name VERILOG_MACRO DEBUG_APF
+#set_global_assignment -name VERILOG_MACRO DEBUG_BPF
+
+############################################################################################
+#                             SIGNALTAP                                                    #
+############################################################################################
+set_instance_assignment -name PARTITION_COLOUR 4294246223 -to iofs_top -entity iofs_top
+set_instance_assignment -name PARTITION_COLOUR 4294952834 -to auto_fab_0 -entity iofs_top
+
+set_global_assignment -name ENABLE_SIGNALTAP OFF
+set_global_assignment -name USE_SIGNALTAP_FILE d5005.stp
+
+############################################################################################
+#                             SETUP                                                    #
+############################################################################################
+
+# Ensure that variables such as BUILD_ROOT_REL are set (must be relative)
+set_global_assignment -name SOURCE_TCL_SCRIPT_FILE ../setup/config_env.tcl
+
+set_global_assignment -name SEED 2
+set_global_assignment -name SOURCE_TCL_SCRIPT_FILE ../setup/design_files_d5005.tcl
