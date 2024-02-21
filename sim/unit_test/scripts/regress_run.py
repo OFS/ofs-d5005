@@ -624,7 +624,7 @@ def send_email_report():
         receiver_email = user_name
 
     message = MIMEMultipart()
-    message["Subject"] = f"Unit Test Regression results - Tool:{args.simulator}, Processes:{args.max_parallel_running_process_count}, Package:{args.package}, Rootdir:{rootdir}"
+    message["Subject"] = f"[D5005] Unit Test Regression results - Tool:{args.simulator}, Processes:{args.max_parallel_running_process_count}, Package:{args.package}, Rootdir:{rootdir}"
     message["From"] = sender_email
     if args.email_list:
         message["To"]   = ", ".join(receiver_email)

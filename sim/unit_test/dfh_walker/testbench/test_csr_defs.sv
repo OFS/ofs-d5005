@@ -82,7 +82,7 @@ typedef struct packed {
 
       fme_dfh_values[FME_DFH_IDX]        = 64'h4000_0000_1000_0000;
       fme_dfh_values[THERM_MNGM_DFH_IDX] = 64'h3_00000_002000_0001;
-      fme_dfh_values[GLBL_PERF_DFH_IDX]  = 64'h3_00000_001000_0007;
+      fme_dfh_values[GLBL_PERF_DFH_IDX]  = 64'h3_00000_001000_0000;
       fme_dfh_values[GLBL_ERROR_DFH_IDX] = 64'h3_00000_00C000_1004;  
       fme_dfh_values[SPI_DFH_IDX]        = 64'h3_00000_010000_000e;  
       fme_dfh_values[PCIE_DFH_IDX]       = 64'h3_00000_010000_0020;  

@@ -673,7 +673,7 @@ def send_email_report():
         receiver_email = user_name
 
     message = MIMEMultipart()
-    message["Subject"] = f"UVM Regression results - Tool:{args.simulator}"
+    message["Subject"] = f"[D5005] UVM Regression results - Tool:{args.simulator}"
     message["From"] = sender_email
     if args.email_list:
         message["To"]   = ", ".join(receiver_email)
