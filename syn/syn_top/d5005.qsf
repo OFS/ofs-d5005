@@ -122,5 +122,5 @@ set_global_assignment -name USE_SIGNALTAP_FILE d5005.stp
 # Ensure that variables such as BUILD_ROOT_REL are set (must be relative)
 set_global_assignment -name SOURCE_TCL_SCRIPT_FILE ../setup/config_env.tcl
 
-set_global_assignment -name SEED 2
+set_global_assignment -name SEED 5
 set_global_assignment -name SOURCE_TCL_SCRIPT_FILE ../setup/design_files_d5005.tcl
