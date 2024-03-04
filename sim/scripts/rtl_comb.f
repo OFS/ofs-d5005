@@ -54,6 +54,7 @@ $WORKDIR/ofs-common/src/common/lib/ram/ram_1r1w.sv
 $WORKDIR/ofs-common/src/common/lib/ram/gram_sdp.v
 $WORKDIR/ofs-common/src/common/lib/sync/fim_cross_handshake.sv
 $WORKDIR/ofs-common/src/common/lib/sync/fim_cross_strobe.sv
+$WORKDIR/ofs-common/src/common/lib/sync/ofs_std_synchronizer_nocut.sv
 $WORKDIR/ofs-common/src/common/lib/sync/fim_resync.sv
 $WORKDIR/ofs-common/src/common/lib/csr/ofs_fim_axi_csr_slave.sv
 $WORKDIR/ofs-common/src/common/lib/bridges/axi_lite2mmio.sv
